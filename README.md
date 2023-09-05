@@ -4,8 +4,7 @@ Playground repository to collect examples and code fragments during my study of 
 
 My study is derived from several sources, including these books I am currently reading:
 
-1. [**Deep Learning with Python, Second Edition
-   **](https://www.manning.com/books/deep-learning-with-python-second-edition)
+1. [**Deep Learning with Python, Second Edition**](https://www.manning.com/books/deep-learning-with-python-second-edition)
    - Author: François Chollet
    - Published: October 2021
    - ISBN: 9781617296864
@@ -16,8 +15,7 @@ My study is derived from several sources, including these books I am currently r
 
 Also, the following lecture series offered as a free course from MIT:
 
-1. [**Introduction to Deep Learning
-   **](https://youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI&si=97C_Ed0Gbe6tegt3)
+1. [**Introduction to Deep Learning**](https://youtube.com/playlist?list=PLtBw6njQRU-rwp5__7C0oIVt26ZgjG9NI&si=97C_Ed0Gbe6tegt3)
    - Author: Alexander Amini
    - Published: Spring Semester 2023
    - Website: http://introtodeeplearning.com
