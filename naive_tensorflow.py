@@ -1,6 +1,8 @@
 import tensorflow as tf
 
 
+# Creates two TensorFlow variables, W and b, and exposes a __call__() method to apply the following transformation:
+# output = activation(dot(W, input) + b)
 class NaiveDense:
 
     def __init__(self, input_size, output_size, activation):
@@ -22,6 +24,8 @@ class NaiveDense:
         return [self.W, self.b]
 
 
+# Chains layers by wrapping a list of layers and exposing a __call__() method that calls the underlying layers on the
+# inputs, in order.
 class NaiveSequential:
 
     def __init__(self, layers):
@@ -39,3 +43,15 @@ class NaiveSequential:
         for layer in self.layers:
             weights += layer.weights
         return weights
+
+
+class BatchGenerator:
+    pass
+
+
+# Mock Keras model:
+model = NaiveSequential([
+    NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
+    NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
+])
+assert len(model.weights) == 4
