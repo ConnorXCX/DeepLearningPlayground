@@ -70,11 +70,11 @@ class BatchGenerator:
 
 
 # Mock Keras model:
-naive_model = NaiveSequential([
+mock_model = NaiveSequential([
     NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
     NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
 ])
-assert len(naive_model.weights) == 4
+assert len(mock_model.weights) == 4
 
 # learning_rate = 1e-3
 
@@ -124,9 +124,9 @@ train_images = train_images.astype('float32') / 255
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype('float32') / 255
 
-fit(naive_model, train_images, train_labels, epochs=10, batch_size=128)
+fit(mock_model, train_images, train_labels, epochs=10, batch_size=128)
 
-predictions = naive_model(test_images)
+predictions = mock_model(test_images)
 predictions = predictions.numpy()
 predicted_labels = np.argmax(predictions, axis=1)
 matches = predicted_labels == test_labels
