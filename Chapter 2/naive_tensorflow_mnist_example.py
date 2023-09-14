@@ -69,13 +69,6 @@ class BatchGenerator:
         return images, labels
 
 
-# Mock Keras model:
-mock_model = NaiveSequential([
-    NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
-    NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
-])
-assert len(mock_model.weights) == 4
-
 # learning_rate = 1e-3
 
 
@@ -87,8 +80,8 @@ assert len(mock_model.weights) == 4
 optimizer = optimizers.SGD(learning_rate=1e-3)
 
 
-# In practice, you would almost never implement a weight update step like this by hand. Instead, you would use an
-# Optimizer instance from Keras, like this:
+# In practice, you would almost never implement a weight update step like this by hand as shown above. Instead,
+# you would use an Optimizer instance from Keras, like this:
 def update_weights(gradients, weights):
     optimizer.apply_gradients(zip(gradients, weights))
 
@@ -96,8 +89,8 @@ def update_weights(gradients, weights):
 # Method to update the weights of the model after running it on one batch of data.
 def one_training_step(model, images_batch, labels_batch):
     with tf.GradientTape() as tape:
-        model_predictions = model(images_batch)
-        per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(labels_batch, model_predictions)
+        predictions = model(images_batch)
+        per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(labels_batch, predictions)
         average_loss = tf.reduce_mean(per_sample_losses)
     gradients = tape.gradient(average_loss, model.weights)
     update_weights(gradients, model.weights)
@@ -117,17 +110,28 @@ def fit(model, images, labels, epochs, batch_size):
                 print(f'loss as batch {batch_counter}: {loss:.2f}')
 
 
-(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+def main():
+    # Mock Keras model:
+    model = NaiveSequential([
+        NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
+        NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
+    ])
+    assert len(model.weights) == 4
 
-train_images = train_images.reshape((60000, 28 * 28))
-train_images = train_images.astype('float32') / 255
-test_images = test_images.reshape((10000, 28 * 28))
-test_images = test_images.astype('float32') / 255
+    (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
-fit(mock_model, train_images, train_labels, epochs=10, batch_size=128)
+    train_images = train_images.reshape((60000, 28 * 28))
+    train_images = train_images.astype('float32') / 255
+    test_images = test_images.reshape((10000, 28 * 28))
+    test_images = test_images.astype('float32') / 255
 
-predictions = mock_model(test_images)
-predictions = predictions.numpy()
-predicted_labels = np.argmax(predictions, axis=1)
-matches = predicted_labels == test_labels
-print(f'accuracy: {np.mean(matches):.2f}')
+    fit(model, train_images, train_labels, epochs=10, batch_size=128)
+
+    predictions = model(test_images)
+    predictions = predictions.numpy()
+    predicted_labels = np.argmax(predictions, axis=1)
+    matches = predicted_labels == test_labels
+    print(f'accuracy: {np.mean(matches):.2f}')
+
+
+main()

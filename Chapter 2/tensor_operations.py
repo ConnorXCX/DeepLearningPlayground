@@ -22,19 +22,23 @@ def naive_add(x, y):
     return x
 
 
-# NumPy implementation
-x = np.random.random((20, 100))
-y = np.random.random((20, 100))
+def main():
+    # NumPy implementation
+    x = np.random.random((20, 100))
+    y = np.random.random((20, 100))
 
-t0 = time.time()
-for _ in range(10000):
-    z = x + y
-    z = np.maximum(z, 0.)
-print("Took: {0:.2f} s".format(time.time() - t0))
+    t0 = time.time()
+    for _ in range(10000):
+        z = x + y
+        np.maximum(z, 0.)
+    print("Took: {0:.2f} s".format(time.time() - t0))
 
-# Naive implementation
-t0 = time.time()
-for _ in range(10000):
-    z = naive_add(x, y)
-    z = naive_relu(z)
-print("Took: {0:.2f} s".format(time.time() - t0))
+    # Naive implementation
+    t0 = time.time()
+    for _ in range(10000):
+        z = naive_add(x, y)
+        naive_relu(z)
+    print("Took: {0:.2f} s".format(time.time() - t0))
+
+
+main()
