@@ -2,34 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-# Finding the parameters of a line neatly separating two classes of data.
-
-# Generate each class of points by drawing their coordinates from a random distribution with a specific covariance
-# matrix and a specific mean. Intuitively, the covariance matrix describes the shape of the point cloud, and the mean
-# describes its position in the plane. We’ll reuse the same covariance matrix for both point clouds, but we’ll use
-# two different mean values—the point clouds will have the same shape, but different positions.
-
-num_samples_per_class = 1000
-negative_samples = np.random.multivariate_normal(
-    mean=[0, 3],
-    cov=[[1, 0.5], [0.5, 1]],
-    size=num_samples_per_class)
-positive_samples = np.random.multivariate_normal(
-    mean=[3, 0],
-    cov=[[1, 0.5], [0.5, 1]],
-    size=num_samples_per_class)
-
-inputs = np.vstack((negative_samples, positive_samples)).astype(np.float32)
-
-targets = np.vstack((np.zeros((num_samples_per_class, 1), dtype='float32'),
-                     np.ones((num_samples_per_class, 1), dtype='float32')))
-
-plt.scatter(inputs[:, 0], inputs[:, 1], c=targets[:, 0])
-plt.show()
-
 # Creating the linear classification variables. A linear classifier is an affine transformation
 # (prediction = W • input + b) trained to minimize the square of the difference between predictions and the targets.
-
 input_dim = 2
 output_dim = 1
 W = tf.Variable(initial_value=tf.random.uniform(shape=(input_dim, output_dim)))
@@ -61,19 +35,46 @@ def training_step(inputs, targets):
     return loss
 
 
-# Batch Training Loop.
-for step in range(40):
-    loss = training_step(inputs, targets)
-    print(f'Loss at step {step + 1}: {loss:.4f}')
+# Finding the parameters of a line neatly separating two classes of data.
+def main():
+    # Generate each class of points by drawing their coordinates from a random distribution with a specific
+    # covariance matrix and a specific mean. Intuitively, the covariance matrix describes the shape of the point
+    # cloud, and the mean describes its position in the plane. We’ll reuse the same covariance matrix for both point
+    # clouds, but we’ll use two different mean values—the point clouds will have the same shape, but different
+    # positions.
+    num_samples_per_class = 1000
+    negative_samples = np.random.multivariate_normal(
+        mean=[0, 3],
+        cov=[[1, 0.5], [0.5, 1]],
+        size=num_samples_per_class)
+    positive_samples = np.random.multivariate_normal(
+        mean=[3, 0],
+        cov=[[1, 0.5], [0.5, 1]],
+        size=num_samples_per_class)
 
-predictions = model(inputs)
-plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] > 0.5)
-plt.show()
+    inputs = np.vstack((negative_samples, positive_samples)).astype(np.float32)
 
-# Linear Classification Model, visualized as a red line.
+    targets = np.vstack((np.zeros((num_samples_per_class, 1), dtype='float32'),
+                         np.ones((num_samples_per_class, 1), dtype='float32')))
 
-x = np.linspace(-1, 4, 100)
-y = - W[0] / W[1] * x + (0.5 - b) / W[1]
-plt.plot(x, y, '-r')
-plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] > 0.5)
-plt.show()
+    plt.scatter(inputs[:, 0], inputs[:, 1], c=targets[:, 0])
+    plt.show()
+
+    # Batch Training Loop.
+    for step in range(40):
+        loss = training_step(inputs, targets)
+        print(f'Loss at step {step + 1}: {loss:.4f}')
+
+    predictions = model(inputs)
+    plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] > 0.5)
+    plt.show()
+
+    # Linear Classification Model, visualized as a red line.
+    x = np.linspace(-1, 4, 100)
+    y = - W[0] / W[1] * x + (0.5 - b) / W[1]
+    plt.plot(x, y, '-r')
+    plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] > 0.5)
+    plt.show()
+
+
+main()
