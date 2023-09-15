@@ -42,3 +42,30 @@ model = keras.Sequential([keras.layers.Dense(1)])
 model.compile(optimizer=keras.optimizers.RMSprop(learning_rate=1e-4),
               loss=keras.losses.MeanSquaredError(),
               metrics=[keras.metrics.BinaryAccuracy()])
+
+# indices_permutation = np.random.permutation(len(inputs))
+# shuffled_inputs = inputs[indices_permutation]
+# shuffled_targets = targets[indices_permutation]
+#
+# num_validation_samples = int(0.3 * len(inputs))
+# val_inputs = shuffled_inputs[:num_validation_samples]
+# val_targets = shuffled_targets[:num_validation_samples]
+# training_inputs = shuffled_inputs[num_validation_samples:]
+# training_targets = shuffled_targets[num_validation_samples:]
+#
+# history = model.fit(
+#     training_inputs,
+#     training_targets,
+#     epochs=5,
+#     batch_size=128,
+#     validation_data=(val_inputs, val_targets)
+# )
+#
+# loss_and_metrics = model.evaluate(val_inputs, val_targets, batch_size=128)
+#
+# # Takes a NumPy array or TensorFlow tensor and returns a TensorFlow tensor.
+# predictions = model(new_inputs)
+#
+# # A better way to do inference is to use the predict() method. It will iterate over the data in small batches and
+# # return a NumPy array of predictions. And unlike __call__(), it can also process TensorFlow Dataset objects.
+# predictions = model.predict(new_inputs, batch_size=128)
