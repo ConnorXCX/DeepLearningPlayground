@@ -24,6 +24,7 @@ def vectorize_sequences(sequences, dimension=10000):
 
 
 def plot_training_and_validation_loss(history_dict):
+    plt.clf()
     loss_values = history_dict['loss']
     validation_loss_values = history_dict['val_loss']
     epochs = range(1, len(loss_values) + 1)
@@ -84,12 +85,16 @@ def main():
     # by passing the validation data as the validation_data argument.
     history = model.fit(partial_x_train,
                         partial_y_train,
-                        epochs=20,
+                        epochs=4,
                         batch_size=512,
                         validation_data=(x_val, y_val))
 
+    # Initial model with 20 epochs exhibited overfitting / overoptimizing of the training data.
     plot_training_and_validation_loss(history.history)
     plot_training_and_validation_accuracy(history.history)
+
+    results = model.evaluate(x_test, y_test)
+    print(results)
 
 
 main()
