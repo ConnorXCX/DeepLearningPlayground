@@ -54,8 +54,6 @@ def plot_training_and_validation_accuracy(history_dict):
 def main():
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
 
-    print(decode_review(train_data[0]))
-
     # Vectorize data.
     x_train = vectorize_sequences(train_data)
     x_test = vectorize_sequences(test_data)
