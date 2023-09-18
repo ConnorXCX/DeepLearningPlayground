@@ -1,62 +1,17 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from keras import layers
 from keras.datasets import imdb
 from tensorflow import keras
 
-
-# Decode a review back to text.
-def decode_review(review):
-    word_index = imdb.get_word_index()
-    reverse_word_index = dict(
-        [(value, key) for (key, value) in word_index.items()])
-    return ' '.join(
-        [reverse_word_index.get(i - 3, '?') for i in review])
-
-
-# Encode integer sequences via multi-hot encoding.
-def vectorize_sequences(sequences, dimension=10000):
-    results = np.zeros((len(sequences), dimension))
-    for i, sequence in enumerate(sequences):
-        for j in sequence:
-            results[i, j] = 1.
-    return results
-
-
-def plot_training_and_validation_loss(history_dict):
-    plt.clf()
-    loss_values = history_dict['loss']
-    validation_loss_values = history_dict['val_loss']
-    epochs = range(1, len(loss_values) + 1)
-    plt.plot(epochs, loss_values, 'bo', label='Training Loss')
-    plt.plot(epochs, validation_loss_values, 'b', label='Validation Loss')
-    plt.title('Training and Validation Loss')
-    plt.xlabel('Epochs')
-    plt.ylabel('Loss')
-    plt.legend()
-    plt.show()
-
-
-def plot_training_and_validation_accuracy(history_dict):
-    plt.clf()
-    accuracy = history_dict['accuracy']
-    validation_accuracy = history_dict['val_accuracy']
-    epochs = range(1, len(accuracy) + 1)
-    plt.plot(epochs, accuracy, 'bo', label='Training Accuracy')
-    plt.plot(epochs, validation_accuracy, 'b', label='Validation Accuracy')
-    plt.title('Training and Validation Accuracy')
-    plt.xlabel('Epochs')
-    plt.ylabel('Accuracy')
-    plt.legend()
-    plt.show()
+import common_code
 
 
 def main():
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
 
     # Vectorize data.
-    x_train = vectorize_sequences(train_data)
-    x_test = vectorize_sequences(test_data)
+    x_train = common_code.vectorize_sequences(train_data)
+    x_test = common_code.vectorize_sequences(test_data)
 
     # Vectorize labels.
     y_train = np.asarray(train_labels).astype('float32')
@@ -90,8 +45,8 @@ def main():
                         validation_data=(x_val, y_val))
 
     # Initial model with 20 epochs exhibited overfitting / overoptimizing of the training data after 4 epochs.
-    plot_training_and_validation_loss(history.history)
-    plot_training_and_validation_accuracy(history.history)
+    common_code.plot_training_and_validation_loss(history.history)
+    common_code.plot_training_and_validation_accuracy(history.history)
 
     results = model.evaluate(x_test, y_test)
     print(results)

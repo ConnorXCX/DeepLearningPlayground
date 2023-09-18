@@ -1,26 +1,17 @@
-import numpy as np
 from keras import layers
 from keras.datasets import reuters
 from keras.utils import to_categorical
 from tensorflow import keras
 
-import binary_classification
-
-
-# Embedding each label as an all-zero vector with a 1 in the place of the label index. Below method is a naive
-# implementation.
-def to_one_hot(labels, dimension=46):
-    results = np.zeros((len(labels), dimension))
-    for i, label in enumerate(labels):
-        results[i, label] = 1
+import common_code
 
 
 def main():
     (train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
 
     # Vectorize data.
-    x_train = binary_classification.vectorize_sequences(train_data)
-    x_test = binary_classification.vectorize_sequences(test_data)
+    x_train = common_code.vectorize_sequences(train_data)
+    x_test = common_code.vectorize_sequences(test_data)
 
     # Vectorize labels. Keras built-in one-hot encoding method, replacing the above to_one_hot method.
     y_train = to_categorical(train_labels)
@@ -54,8 +45,11 @@ def main():
                         validation_data=(x_val, y_val))
 
     # Initial model with 20 epochs exhibited overfitting / overoptimizing of the training data after 9 epochs.
-    binary_classification.plot_training_and_validation_loss(history.history)
-    binary_classification.plot_training_and_validation_accuracy(history.history)
+    common_code.plot_training_and_validation_loss(history.history)
+    common_code.plot_training_and_validation_accuracy(history.history)
+
+    results = model.evaluate(x_test, y_test)
+    print(results)
 
 
 main()
