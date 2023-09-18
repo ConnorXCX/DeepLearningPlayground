@@ -89,7 +89,7 @@ def main():
                         batch_size=512,
                         validation_data=(x_val, y_val))
 
-    # Initial model with 20 epochs exhibited overfitting / overoptimizing of the training data.
+    # Initial model with 20 epochs exhibited overfitting / overoptimizing of the training data after 4 epochs.
     plot_training_and_validation_loss(history.history)
     plot_training_and_validation_accuracy(history.history)
 
