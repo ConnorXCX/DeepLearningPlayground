@@ -31,14 +31,14 @@ def main():
     for _ in range(10000):
         z = x + y
         np.maximum(z, 0.)
-    print("Took: {0:.2f} s".format(time.time() - t0))
+    print('Took: {0:.2f} s'.format(time.time() - t0))
 
     # Naive implementation
     t0 = time.time()
     for _ in range(10000):
         z = naive_add(x, y)
         naive_relu(z)
-    print("Took: {0:.2f} s".format(time.time() - t0))
+    print('Took: {0:.2f} s'.format(time.time() - t0))
 
 
 main()

@@ -6,12 +6,12 @@ from tensorflow import keras
 
 
 # Decode a review back to text.
-def decode_review(coded_review):
+def decode_review(review):
     word_index = imdb.get_word_index()
     reverse_word_index = dict(
         [(value, key) for (key, value) in word_index.items()])
     return ''.join(
-        [reverse_word_index.get(i - 3, "?") for i in coded_review])
+        [reverse_word_index.get(i - 3, '?') for i in review])
 
 
 # Encode integer sequences via multi-hot encoding.
