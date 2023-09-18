@@ -6,6 +6,9 @@ from tensorflow import keras
 import common_code
 
 
+# Two-class classification, or binary classification, is one of the most common kinds of machine learning problems.
+# In this example, you’ll learn to classify movie reviews as positive or negative, based on the text content of the
+# reviews.
 def main():
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
 

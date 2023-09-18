@@ -6,6 +6,11 @@ from tensorflow import keras
 import common_code
 
 
+# In this example, we build a model to classify Reuters newswires into 46 mutually exclusive topics. Because we have
+# many classes, this problem is an instance of multiclass classification, and because each data point should be
+# classified into only one category, the problem is more specifically an instance of single-label multiclass
+# classification. If each data point could belong to multiple categories (in this case, topics), we’d be facing a
+# multilabel multiclass classification problem.
 def main():
     (train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
 
