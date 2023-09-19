@@ -25,9 +25,9 @@ def build_model():
     return model
 
 
+# K-fold cross-validation implementation.
+# Reference section 4.3.4 in 'Deep Learning with Python'
 def k_fold_cross_validation(train_data, train_targets):
-    # K-fold cross-validation implementation.
-    # Reference section 4.3.4 in 'Deep Learning with Python'
     k = 4
     num_val_samples = len(train_data) // k
     num_epochs = 500
@@ -89,7 +89,7 @@ def main():
     test_data -= mean
     test_data -= standard_deviation
 
-    # k_fold_cross_validation(train_data, train_targets)
+    k_fold_cross_validation(train_data, train_targets)
 
     # Training the final model.
     model = build_model()
