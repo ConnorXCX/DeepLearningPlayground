@@ -87,7 +87,7 @@ def main():
     standard_deviation = train_data.std(axis=0)
     train_data /= standard_deviation
     test_data -= mean
-    test_data -= standard_deviation
+    test_data /= standard_deviation
 
     k_fold_cross_validation(train_data, train_targets)
 
@@ -99,7 +99,7 @@ def main():
     print(f'Test MAE Score: {test_mae_score}')
 
     predictions = model.predict(test_data)
-    print(f'Model\'s guess for the sample\'s price in thousands of dollars: {predictions[0]}')
+    print(f'Model\'s guess for the sample\'s price in thousands of dollars: {predictions.item(0)}')
 
 
 main()
