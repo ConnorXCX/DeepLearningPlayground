@@ -10,7 +10,8 @@ import common_code
 # In this example, you’ll learn to classify movie reviews as positive or negative, based on the text content of the
 # reviews.
 def main():
-    (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
+    (train_data, train_labels), (test_data,
+                                 test_labels) = imdb.load_data(num_words=10000)
 
     # Vectorize data.
     x_train = common_code.vectorize_sequences(train_data)

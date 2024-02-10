@@ -12,7 +12,8 @@ import common_code
 # classification. If each data point could belong to multiple categories (in this case, topics), we’d be facing a
 # multilabel multiclass classification problem.
 def main():
-    (train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
+    (train_data, train_labels), (test_data,
+                                 test_labels) = reuters.load_data(num_words=10000)
 
     # Vectorize data.
     x_train = common_code.vectorize_sequences(train_data)

@@ -90,7 +90,8 @@ def update_weights(gradients, weights):
 def one_training_step(model, images_batch, labels_batch):
     with tf.GradientTape() as tape:
         predictions = model(images_batch)
-        per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(labels_batch, predictions)
+        per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(
+            labels_batch, predictions)
         average_loss = tf.reduce_mean(per_sample_losses)
     gradients = tape.gradient(average_loss, model.weights)
     update_weights(gradients, model.weights)

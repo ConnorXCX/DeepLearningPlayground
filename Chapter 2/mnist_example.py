@@ -10,7 +10,8 @@ model = keras.Sequential([
     layers.Dense(10, activation='softmax')
 ])
 
-model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='rmsprop',
+              loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 train_images = train_images.reshape((60000, 28 * 28))
 train_images = train_images.astype('float32') / 255

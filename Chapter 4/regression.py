@@ -38,7 +38,8 @@ def k_fold_cross_validation(train_data, train_targets):
         # Prepares the validation data: data from partition #k.
         val_data = train_data[i * num_val_samples: (i + 1) * num_val_samples]
         # Prepares the training data: data from all other partitions.
-        val_targets = train_targets[i * num_val_samples: (i + 1) * num_val_samples]
+        val_targets = train_targets[i *
+                                    num_val_samples: (i + 1) * num_val_samples]
         partial_train_data = np.concatenate(
             [train_data[:i * num_val_samples],
              train_data[(i + 1) * num_val_samples:]],
@@ -60,7 +61,8 @@ def k_fold_cross_validation(train_data, train_targets):
 
     # Validation MAE stops improving significantly after 120–140 epochs (this number includes the 10 epochs we
     # omitted). Past that point, we start overfitting.
-    plot_validation_scores([np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)])
+    plot_validation_scores(
+        [np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)])
 
 
 def plot_validation_scores(average_mae_history):
@@ -79,7 +81,8 @@ def plot_validation_scores(average_mae_history):
 # we’ll attempt to predict the median price of homes in a given Boston suburb in the mid-1970s, given data points
 # about the suburb at the time, such as the crime rate, the local property tax rate, and so on.
 def main():
-    (train_data, train_targets), (test_data, test_targets) = (boston_housing.load_data())
+    (train_data, train_targets), (test_data,
+                                  test_targets) = (boston_housing.load_data())
 
     # Normalizing the data
     mean = train_data.mean(axis=0)
@@ -99,7 +102,8 @@ def main():
     print(f'Test MAE Score: {test_mae_score}')
 
     predictions = model.predict(test_data)
-    print(f'Model\'s guess for the sample\'s price in thousands of dollars: {predictions.item(0)}')
+    print(
+        f'Model\'s guess for the sample\'s price in thousands of dollars: {predictions.item(0)}')
 
 
 main()
